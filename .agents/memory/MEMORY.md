@@ -1,0 +1,2 @@
+- [Project Architecture](project-architecture.md) — Full stack layout, DB schema, API routes, Neo-Brutalism design system, critical gotchas (route order, version increment).
+- [Session Log](session-log.md) — Running log of what was built each session; what's next.

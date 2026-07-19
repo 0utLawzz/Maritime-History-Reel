@@ -2,14 +2,16 @@ openapi: 3.1.0
 info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
-  version: 0.1.0
-  description: API specification
+  version: 0.2.0
+  description: Video Studio Dashboard API — manage video projects, track status, and publish to social platforms.
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: projects
+    description: Video project CRUD and pipeline
 paths:
   /healthz:
     get:
@@ -24,6 +26,171 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /projects:
+    get:
+      operationId: listProjects
+      tags: [projects]
+      summary: List all video projects
+      parameters:
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [draft, review, approved, scheduled, published]
+          description: Filter by status
+      responses:
+        "200":
+          description: List of projects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/VideoProject"
+    post:
+      operationId: createProject
+      tags: [projects]
+      summary: Create a new video project
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VideoProjectInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VideoProject"
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+  /projects/stats:
+    get:
+      operationId: getProjectStats
+      tags: [projects]
+      summary: Dashboard summary stats
+      description: Returns counts per status, total projects, and recently updated items.
+      responses:
+        "200":
+          description: Project statistics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProjectStats"
+
+  /projects/{id}:
+    get:
+      operationId: getProject
+      tags: [projects]
+      summary: Get a single video project
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Project found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VideoProject"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+    put:
+      operationId: updateProject
+      tags: [projects]
+      summary: Update a video project (full replace)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VideoProjectUpdate"
+      responses:
+        "200":
+          description: Updated project
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VideoProject"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+    delete:
+      operationId: deleteProject
+      tags: [projects]
+      summary: Delete a video project
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted successfully
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+  /projects/{id}/status:
+    patch:
+      operationId: updateProjectStatus
+      tags: [projects]
+      summary: Advance or change a project's pipeline status
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VideoProjectStatusUpdate"
+      responses:
+        "200":
+          description: Updated project
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VideoProject"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +201,199 @@ components:
       required:
         - status
 
+    VideoProject:
+      type: object
+      required:
+        - id
+        - title
+        - topic
+        - hookDate
+        - hookYear
+        - scene2Headline
+        - scene2Subline
+        - scene3Headline
+        - scene3Body
+        - scene4Headline
+        - scene4Body
+        - scene5Headline
+        - scene5Body
+        - scene6Cta
+        - status
+        - version
+        - createdAt
+        - updatedAt
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        topic:
+          type: string
+          description: Subject/topic of the reel (e.g. "Mary Rose Warship")
+        hookDate:
+          type: string
+          description: Date shown in hook scene (e.g. "July 19")
+        hookYear:
+          type: string
+          description: Historical year (e.g. "1545")
+        scene2Headline:
+          type: string
+        scene2Subline:
+          type: string
+        scene3Headline:
+          type: string
+        scene3Body:
+          type: string
+        scene4Headline:
+          type: string
+        scene4Body:
+          type: string
+        scene5Headline:
+          type: string
+        scene5Body:
+          type: string
+        scene6Cta:
+          type: string
+          description: Call-to-action text for final scene (e.g. "Follow for more history")
+        status:
+          type: string
+          enum: [draft, review, approved, scheduled, published]
+        scheduledAt:
+          type: ["string", "null"]
+          format: date-time
+        publishedAt:
+          type: ["string", "null"]
+          format: date-time
+        version:
+          type: integer
+          description: Auto-incremented version number on every save
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    VideoProjectInput:
+      type: object
+      required:
+        - title
+      properties:
+        title:
+          type: string
+          minLength: 1
+        topic:
+          type: string
+        hookDate:
+          type: string
+        hookYear:
+          type: string
+        scene2Headline:
+          type: string
+        scene2Subline:
+          type: string
+        scene3Headline:
+          type: string
+        scene3Body:
+          type: string
+        scene4Headline:
+          type: string
+        scene4Body:
+          type: string
+        scene5Headline:
+          type: string
+        scene5Body:
+          type: string
+        scene6Cta:
+          type: string
+        status:
+          type: string
+          enum: [draft, review, approved, scheduled, published]
+        scheduledAt:
+          type: ["string", "null"]
+          format: date-time
+
+    VideoProjectUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+          minLength: 1
+        topic:
+          type: string
+        hookDate:
+          type: string
+        hookYear:
+          type: string
+        scene2Headline:
+          type: string
+        scene2Subline:
+          type: string
+        scene3Headline:
+          type: string
+        scene3Body:
+          type: string
+        scene4Headline:
+          type: string
+        scene4Body:
+          type: string
+        scene5Headline:
+          type: string
+        scene5Body:
+          type: string
+        scene6Cta:
+          type: string
+        status:
+          type: string
+          enum: [draft, review, approved, scheduled, published]
+        scheduledAt:
+          type: ["string", "null"]
+          format: date-time
+
+    VideoProjectStatusUpdate:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+          enum: [draft, review, approved, scheduled, published]
+        scheduledAt:
+          type: ["string", "null"]
+          format: date-time
+
+    ProjectStats:
+      type: object
+      required:
+        - total
+        - byStatus
+        - recentlyUpdated
+      properties:
+        total:
+          type: integer
+        byStatus:
+          type: object
+          properties:
+            draft:
+              type: integer
+            review:
+              type: integer
+            approved:
+              type: integer
+            scheduled:
+              type: integer
+            published:
+              type: integer
+          required: [draft, review, approved, scheduled, published]
+        recentlyUpdated:
+          type: array
+          items:
+            $ref: "#/components/schemas/VideoProject"
+
+    ApiError:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: string
