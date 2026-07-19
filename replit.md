@@ -1,36 +1,51 @@
-# [Project name]
+# Mary Rose History Reel
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A short-form video reel about the Mary Rose (Tudor warship) built as an animated React video with scene-by-scene playback, progress controls, mute/loop, and a background particle effect.
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
+- **Video app** — select "Mary Rose History Reel" in the preview dropdown (runs automatically via the `artifacts/mary-rose-reel: web` workflow)
+- **API server** — select "API Server" in the preview dropdown. Requires `DATABASE_URL` to be set first (see below).
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
 - `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
+- `pnpm --filter @workspace/db run push` — push DB schema changes to the dev database
+
+## Required environment variables
+
+- `DATABASE_URL` — PostgreSQL connection string (required by the API server and `@workspace/db`). The video app runs without it.
 
 ## Stack
 
-- pnpm workspaces, Node.js 24, TypeScript 5.9
-- API: Express 5
-- DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
-- API codegen: Orval (from OpenAPI spec)
-- Build: esbuild (CJS bundle)
+- pnpm workspaces, Node.js 20, TypeScript 5.9
+- Video: React 19 + Vite 7, Framer Motion, GSAP, Three.js / React Three Fiber
+- API: Express 5 + Pino logging
+- DB: PostgreSQL + Drizzle ORM + drizzle-zod
+- Validation: Zod (v4), drizzle-zod
+- API codegen: Orval (from `lib/api-spec/openapi.yaml`)
+- Build: esbuild (CJS bundle for API server)
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/mary-rose-reel/src/components/video/` — all scene components and the video player shell
+- `artifacts/mary-rose-reel/src/lib/video/` — `useVideoPlayer` hook and animation presets
+- `artifacts/mary-rose-reel/public/` — static assets (audio, images, video)
+- `artifacts/api-server/src/` — Express app, routes, middlewares
+- `lib/db/src/schema/` — Drizzle schema (source of truth for DB shape)
+- `lib/api-spec/openapi.yaml` — OpenAPI spec (source of truth for API contract)
+- `lib/api-client-react/` — generated React query hooks (from Orval)
+- `lib/api-zod/` — generated Zod schemas (from Orval)
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- The video player detects whether it is embedded in an iframe (`window.self !== window.top`). When viewed directly it renders a bare `<VideoTemplate />` (for recording/export); the full controls UI only appears when iframed.
+- Scene durations are defined in `VideoTemplate.tsx` (`SCENE_DURATIONS`) and shared with the controls layer so progress bars stay in sync.
+- Audio seek position is computed from cumulative scene start times so background music stays aligned when the user jumps between scenes.
+- API types flow from a single OpenAPI spec → Orval codegen → typed React hooks + Zod validators. Run `pnpm --filter @workspace/api-spec run codegen` after changing the spec.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+A ~27-second animated history reel covering the Mary Rose warship (1545), with six scenes, background particle video, a soundtrack, and a mobile-first 9:16 layout.
 
 ## User preferences
 
@@ -38,7 +53,9 @@ _Populate as you build — explicit user instructions worth remembering across s
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- The video player's `isIframed` check means a direct browser visit shows `<VideoTemplate />` with no controls. To see controls, embed in an iframe or view via the Replit preview pane (which wraps the artifact in an iframe).
+- `DATABASE_URL` must be set before starting the API server workflow — it throws at startup if missing.
+- Scene durations in `VideoTemplate.tsx` must stay in sync with `SCENE_START_SEC` (computed automatically from `SCENE_DURATIONS`). Audio sync breaks if durations are changed without also recomputing the offset map.
 
 ## Pointers
 
