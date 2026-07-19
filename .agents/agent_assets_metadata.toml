@@ -1,0 +1,8 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "3TjpCydoQmL-VqNyidddl"
+uri = "file://artifacts/mary-rose-reel/public/audio/bg_music.mp3"
+type = "audio"
+title = "dramatic historical orchestral background"

@@ -1,0 +1,27 @@
+kind = "video"
+previewPath = "/mary-rose-reel/"
+title = "Mary Rose History Reel"
+version = "1.0.0"
+id = "artifacts/mary-rose-reel"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/mary-rose-reel/" ]
+localPort = 19145
+
+[services.development]
+run = "pnpm --filter @workspace/mary-rose-reel run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/mary-rose-reel", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/mary-rose-reel/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19145"
+BASE_PATH = "/mary-rose-reel/"
