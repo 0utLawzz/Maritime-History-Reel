@@ -18,26 +18,17 @@ export const SCENE_DURATIONS: Record<string, number> = {
   scene6: 4000,
 };
 
-const SCENE_COMPONENTS: Record<string, React.ComponentType> = {
-  hook: SceneHook,
-  scene2: Scene2,
-  scene3: Scene3,
-  scene4: Scene4,
-  scene5: Scene5,
-  scene6: Scene6,
-};
-
 const SCENE_START_SEC: Record<string, number> = (() => {
   const out: Record<string, number> = {};
-  let cumulativeMs = 0;
-  for (const [key, ms] of Object.entries(SCENE_DURATIONS)) {
-    out[key] = cumulativeMs / 1000;
-    cumulativeMs += ms;
+  let ms = 0;
+  for (const [key, dur] of Object.entries(SCENE_DURATIONS)) {
+    out[key] = ms / 1000;
+    ms += dur;
   }
   return out;
 })();
 
-const AUDIO_SEEK_EPSILON_SEC = 0.18;
+const AUDIO_SEEK_EPSILON = 0.18;
 
 export default function VideoTemplate({
   durations = SCENE_DURATIONS,
@@ -51,59 +42,60 @@ export default function VideoTemplate({
   onSceneChange?: (sceneKey: string) => void;
 } = {}) {
   const { currentScene, currentSceneKey } = useVideoPlayer({ durations, loop });
+  const baseKey = currentSceneKey.replace(/_r[12]$/, '');
 
   useEffect(() => {
     onSceneChange?.(currentSceneKey);
   }, [currentSceneKey, onSceneChange]);
 
-  const baseSceneKey = currentSceneKey.replace(/_r[12]$/, '') as keyof typeof SCENE_DURATIONS;
-  const SceneComponent = SCENE_COMPONENTS[baseSceneKey];
-
   const audioRef = useRef<HTMLAudioElement | null>(null);
-
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
     audio.volume = 0.45;
-    const targetTime = SCENE_START_SEC[baseSceneKey] ?? 0;
-    if (Math.abs(audio.currentTime - targetTime) > AUDIO_SEEK_EPSILON_SEC) {
-      audio.currentTime = targetTime;
+    const t = SCENE_START_SEC[baseKey] ?? 0;
+    if (Math.abs(audio.currentTime - t) > AUDIO_SEEK_EPSILON) {
+      audio.currentTime = t;
     }
     audio.play().catch(() => {});
-  }, [currentSceneKey, baseSceneKey, muted]);
+  }, [currentSceneKey, baseKey, muted]);
 
   return (
-    <div className="w-full h-[100dvh] flex items-center justify-center bg-black">
+    <div style={{ width: '100%', height: '100vh', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#000' }}>
       <div
-        className="relative overflow-hidden bg-brand-navy shadow-2xl"
         style={{
+          position: 'relative',
           width: '100%',
           maxWidth: '450px',
           aspectRatio: '9/16',
           maxHeight: '100dvh',
+          overflow: 'hidden',
+          backgroundColor: '#0B132B',
         }}
       >
-        {/* Persistent background layers */}
-        <div className="absolute inset-0 z-0">
-          <video
-            src={`${import.meta.env.BASE_URL}videos/gold-particles.mp4`}
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="w-full h-full object-cover opacity-30 mix-blend-screen"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-brand-navy/60" />
-        </div>
+        {/* Persistent particle video background */}
+        <video
+          src={`${import.meta.env.BASE_URL}videos/gold-particles.mp4`}
+          autoPlay
+          muted
+          loop
+          playsInline
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.3, mixBlendMode: 'screen', zIndex: 0 }}
+        />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent, rgba(11,19,43,0.6))', zIndex: 1 }} />
 
-        {/* Foreground scenes */}
-        <div className="relative z-10 w-full h-full">
+        {/* Scenes */}
+        <div style={{ position: 'relative', zIndex: 2, width: '100%', height: '100%' }}>
           <AnimatePresence mode="popLayout">
-            {SceneComponent && <SceneComponent key={currentSceneKey} />}
+            {currentScene === 0 && <SceneHook key={currentSceneKey} />}
+            {currentScene === 1 && <Scene2 key={currentSceneKey} />}
+            {currentScene === 2 && <Scene3 key={currentSceneKey} />}
+            {currentScene === 3 && <Scene4 key={currentSceneKey} />}
+            {currentScene === 4 && <Scene5 key={currentSceneKey} />}
+            {currentScene === 5 && <Scene6 key={currentSceneKey} />}
           </AnimatePresence>
         </div>
 
-        {/* Audio */}
         <audio
           ref={audioRef}
           src={`${import.meta.env.BASE_URL}audio/bg_music.mp3`}

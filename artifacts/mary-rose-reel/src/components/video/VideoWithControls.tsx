@@ -135,7 +135,13 @@ function ControlBar({
 }
 
 export default function VideoWithControls() {
-  const isIframed = typeof window !== 'undefined' && window.self !== window.top;
+  const isIframed = (() => {
+    try {
+      return typeof window !== 'undefined' && window.self !== window.top;
+    } catch {
+      return true;
+    }
+  })();
 
   const {
     sceneKeys, activeIndex, locked, mountKey, tick,
