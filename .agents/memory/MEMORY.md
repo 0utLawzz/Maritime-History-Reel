@@ -1,3 +1,5 @@
 - [Project Architecture](project-architecture.md) — Full stack layout, DB schema, API routes, Neo-Brutalism design system, critical gotchas (route order, version increment).
 - [Imported project workflows](imported-project-workflows.md) — Imported artifact metadata may not be runtime-registered; configure minimal workflows from the existing commands.
+- [Brand System](brand-system.md) — Past In A Minute is now the canonical brand; existing dashboard still uses Bright Stories branding.
+- [Workflow Port Conflicts](workflow-port-conflicts.md) — Removing a manual workflow can orphan the process; kill the port holder before restarting managed artifacts.
 - [Session Log](session-log.md) — Running log of what was built each session; what's next.

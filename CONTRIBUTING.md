@@ -12,6 +12,7 @@ Thank you for wanting to improve this project! This guide covers everything you 
 4. [Submitting Changes](#submitting-changes)
 5. [Version System](#version-system)
 6. [Auto Publish Pipeline](#auto-publish-pipeline)
+7. [License](#license)
 
 ---
 
@@ -78,7 +79,7 @@ pnpm --filter @workspace/studio-dashboard run dev
 pnpm --filter @workspace/mary-rose-reel run dev
 ```
 
-On Replit, the workflows start all three automatically.
+On Replit, the artifact workflows start the dashboard and API automatically. Select the desired artifact from the preview dropdown.
 
 ### Step 6 — Verify
 
@@ -98,6 +99,8 @@ git pull origin main
 # Check types pass
 pnpm run typecheck
 ```
+
+> ⚠️ The full `pnpm run typecheck` currently fails in the optional Mary Rose reel package due to pre-existing DOM-library typing issues. The dashboard and API packages typecheck cleanly. See the open follow-up task to fix the remaining reel errors.
 
 ### After changing `lib/api-spec/openapi.yaml`
 
@@ -134,21 +137,24 @@ Do NOT run `push` against production — Replit's Publish flow handles that auto
 
 ### TypeScript
 
-- Strict mode is on — no `any`, no `ts-ignore` without a comment explaining why
+- Strict mode is on — avoid `any`; if you must use it, add a comment explaining why
 - Prefer `const` over `let`; never `var`
 - Use entity-shaped names for API schemas (`NoteInput`, not `CreateNoteBody`)
+- Prefer explicit return types on public API route handlers to catch contract drift
 
 ### React
 
 - Functional components only
 - Co-locate component, types, and hooks when possible
 - Use TanStack Query for all server state — no `useState` for fetched data
+- Keep local form state typed explicitly; avoid inferring literal-only unions from initial values
 
 ### API
 
 - All new endpoints go in `artifacts/api-server/src/routes/`
 - Always validate with the Zod schema from `@workspace/api-zod`
 - Return appropriate HTTP status codes (201 for create, 204 for delete, 404 for missing)
+- Register specific routes before parameterized ones (e.g., `/projects/stats` before `/projects/:id`)
 
 ### Formatting
 
@@ -164,7 +170,7 @@ Prettier is configured at the root; CI enforces it.
 
 1. Fork and branch from `main`
 2. Make your changes
-3. Run `pnpm run typecheck` — must pass
+3. Run `pnpm run typecheck` — the dashboard and API packages must pass
 4. Open a Pull Request using the [PR template](.github/PULL_REQUEST_TEMPLATE.md)
 5. A maintainer will review within 2 business days
 
@@ -212,8 +218,15 @@ To trigger a full deploy to Replit production, click **Publish** in the Replit w
 
 ---
 
+## License
+
+By contributing, you agree that your contributions will be licensed under the [MIT License](LICENSE).
+
+---
+
 ## Getting Help
 
 - Open an [issue](.github/ISSUE_TEMPLATE/) for bugs or feature requests
 - Ping a maintainer in the PR if you're stuck
 - Read `replit.md` for Replit-specific gotchas
+- For security issues, please read [SECURITY.md](SECURITY.md)

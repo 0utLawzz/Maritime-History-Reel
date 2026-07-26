@@ -1,5 +1,10 @@
 # Video Studio Dashboard
 
+[![CI](https://github.com/YOUR_ORG/YOUR_REPO/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR_ORG/YOUR_REPO/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![pnpm](https://img.shields.io/badge/pnpm-10.x-orange.svg)](https://pnpm.io)
+[![Node](https://img.shields.io/badge/node-20.x-green.svg)](https://nodejs.org)
+
 A full-stack platform for creating, managing, and publishing 9:16 short-form history reels to Facebook Pages, Instagram Reels, and YouTube Shorts — built on a pnpm monorepo with React, Express, and PostgreSQL.
 
 ---
@@ -27,12 +32,14 @@ pnpm --filter @workspace/studio-dashboard run dev
 pnpm --filter @workspace/mary-rose-reel run dev
 ```
 
+On Replit, the artifact workflows start the dashboard and API automatically.
+
 ---
 
 ## What It Does
 
 | Feature | Description |
-|---|---|
+|---|---|---|
 | **Video Studio Dashboard** | Create and manage short-form video projects with a structured 6-scene format |
 | **Neo-Brutalism UI** | Bold, no-nonsense design system — cream, orange, teal, hard shadows |
 | **Live 9:16 Preview** | See your video as you type, before export |
@@ -48,7 +55,7 @@ pnpm --filter @workspace/mary-rose-reel run dev
 ```
 .
 ├── artifacts/
-│   ├── api-server/        — Express 5 REST API (port auto-assigned by Replit)
+│   ├── api-server/        — Express 5 REST API (served at /api)
 │   ├── mary-rose-reel/    — Animated 9:16 video reel (React + Vite)
 │   ├── mockup-sandbox/    — Component previews (design tool)
 │   └── studio-dashboard/  — Main dashboard app (React + Vite, root path)
@@ -60,7 +67,8 @@ pnpm --filter @workspace/mary-rose-reel run dev
 ├── scripts/               — Post-merge automation
 ├── CHANGELOG.md           — Version history
 ├── CONTRIBUTING.md        — How to contribute
-└── replit.md              — Developer notes
+├── SECURITY.md            — Security policy and reporting
+└── replit.md              — Replit-specific developer notes
 ```
 
 ---
@@ -68,7 +76,7 @@ pnpm --filter @workspace/mary-rose-reel run dev
 ## Scripts Reference
 
 | Command | What it does |
-|---|---|
+|---|---|---|
 | `pnpm install` | Install all workspace dependencies |
 | `pnpm run typecheck` | Full TypeScript check across all packages |
 | `pnpm run build` | Typecheck + build all packages |
@@ -97,6 +105,16 @@ pnpm --filter @workspace/mary-rose-reel run dev
 | `SESSION_SECRET` | ⚠️ Prod | Secret for session signing |
 | `PORT` | Auto | Injected by Replit per-artifact |
 | `BASE_PATH` | Auto | Injected by Replit per-artifact |
+
+See `.env.example` for a template and `replit.md` for Replit-specific setup.
+
+---
+
+## Contributing
+
+We welcome contributions! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for the workflow, code standards, and pull request process.
+
+For security issues, see [SECURITY.md](SECURITY.md).
 
 ---
 
