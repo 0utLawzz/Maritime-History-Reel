@@ -15,6 +15,23 @@ import {
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
+type ProjectFormData = {
+  title: string;
+  topic: string;
+  hookDate: string;
+  hookYear: string;
+  scene2Headline: string;
+  scene2Subline: string;
+  scene3Headline: string;
+  scene3Body: string;
+  scene4Headline: string;
+  scene4Body: string;
+  scene5Headline: string;
+  scene5Body: string;
+  scene6Cta: string;
+  status: VideoProjectStatus;
+};
+
 export default function ProjectEditor() {
   const params = useParams();
   const id = params.id ? parseInt(params.id, 10) : null;
@@ -33,7 +50,7 @@ export default function ProjectEditor() {
   const deleteProject = useDeleteProject();
 
   // Form state
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ProjectFormData>({
     title: '',
     topic: '',
     hookDate: '',

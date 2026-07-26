@@ -1,11 +1,12 @@
-# Mary Rose History Reel
+# Video Studio Dashboard
 
-A short-form video reel about the Mary Rose (Tudor warship) built as an animated React video with scene-by-scene playback, progress controls, mute/loop, and a background particle effect.
+A full-stack video studio for creating and managing 9:16 short-form history reels, with a Neo-Brutalist React dashboard, Express API, PostgreSQL persistence, and an optional animated Mary Rose reel preview.
 
 ## Run & Operate
 
-- **Video app** — select "Mary Rose History Reel" in the preview dropdown (runs automatically via the `artifacts/mary-rose-reel: web` workflow)
-- **API server** — select "API Server" in the preview dropdown. Requires `DATABASE_URL` to be set first (see below).
+- **Dashboard** — the `Video Studio Dashboard` workflow serves the main app at `/`.
+- **API server** — the `Video Studio API` workflow serves the REST API at `/api`. Requires `DATABASE_URL` to be set first (see below).
+- **Video app** — run `pnpm --filter @workspace/mary-rose-reel run dev` with `PORT` and `BASE_PATH` set to preview the optional Mary Rose reel.
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
 - `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
@@ -14,6 +15,8 @@ A short-form video reel about the Mary Rose (Tudor warship) built as an animated
 ## Required environment variables
 
 - `DATABASE_URL` — PostgreSQL connection string (required by the API server and `@workspace/db`). The video app runs without it.
+- `SESSION_SECRET` — available for session signing when authentication is added.
+- `PORT` and `BASE_PATH` — supplied by the Replit artifact/workflow configuration; the dashboard uses `PORT=5000` and the API uses `PORT=8080` in the current development workflows.
 
 ## Stack
 

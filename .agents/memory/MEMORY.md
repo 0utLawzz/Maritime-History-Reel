@@ -1,2 +1,3 @@
 - [Project Architecture](project-architecture.md) — Full stack layout, DB schema, API routes, Neo-Brutalism design system, critical gotchas (route order, version increment).
+- [Imported project workflows](imported-project-workflows.md) — Imported artifact metadata may not be runtime-registered; configure minimal workflows from the existing commands.
 - [Session Log](session-log.md) — Running log of what was built each session; what's next.
