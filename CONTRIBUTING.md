@@ -1,10 +1,12 @@
-# Contributing Guide
+# Contributing to Maritime History Reel
 
-Thank you for wanting to improve this project! This guide covers everything you need to get set up and make great contributions.
+Thank you for your interest in contributing to Maritime History Reel! This document provides guidelines and instructions for contributing to the project.
 
----
+## 🤝 Code of Conduct
 
-## Table of Contents
+This project adheres to a code of conduct that all contributors must follow. By participating, you are expected to uphold this standard. Please report unacceptable behavior to [net2tara@gmail.com](mailto:net2tara@gmail.com).
+
+## 📋 Table of Contents
 
 1. [Installation Guide](#installation-guide)
 2. [Development Workflow](#development-workflow)
@@ -12,7 +14,8 @@ Thank you for wanting to improve this project! This guide covers everything you 
 4. [Submitting Changes](#submitting-changes)
 5. [Version System](#version-system)
 6. [Auto Publish Pipeline](#auto-publish-pipeline)
-7. [License](#license)
+7. [Community Guidelines](#community-guidelines)
+8. [License](#license)
 
 ---
 
@@ -230,3 +233,50 @@ By contributing, you agree that your contributions will be licensed under the [M
 - Ping a maintainer in the PR if you're stuck
 - Read `replit.md` for Replit-specific gotchas
 - For security issues, please read [SECURITY.md](SECURITY.md)
+
+---
+
+## Community Guidelines
+
+### How to Contribute
+
+We welcome contributions from everyone! Here are some ways you can help:
+
+- 🐛 **Report bugs** - Open an issue with detailed reproduction steps
+- 💡 **Suggest features** - Open an issue with your feature proposal
+- 📝 **Improve documentation** - Fix typos, clarify instructions, or add examples
+- 🔧 **Fix bugs** - Submit a pull request with a fix
+- ✨ **Add features** - Submit a pull request with a new feature
+
+### Pull Request Process
+
+1. **Fork the repository** and create your branch from `main`
+2. **Make your changes** following the code standards
+3. **Write tests** if applicable
+4. **Update documentation** if needed
+5. **Run tests** - Ensure all tests pass
+6. **Submit a pull request** with a clear description of changes
+7. **Address review feedback** - Work with maintainers to refine your PR
+
+### Issue Reporting
+
+When reporting issues, please include:
+
+- **Clear title** - Summarize the issue
+- **Detailed description** - Explain what happened and what you expected
+- **Steps to reproduce** - Provide minimal reproduction steps
+- **Environment** - OS, Node.js version, browser (if applicable)
+- **Screenshots** - If the issue is visual
+
+### Communication
+
+- Be respectful and constructive in all interactions
+- Focus on what is best for the community
+- Show empathy towards other community members
+- Welcome newcomers and help them learn
+
+---
+
+## Recognition
+
+Contributors who make significant contributions will be recognized in the project's contributor list and release notes. We appreciate all contributions, big and small!
