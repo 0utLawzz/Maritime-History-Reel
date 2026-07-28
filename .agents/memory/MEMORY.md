@@ -3,3 +3,4 @@
 - [Brand System](brand-system.md) — Past In A Minute is now the canonical brand; existing dashboard still uses Bright Stories branding.
 - [Workflow Port Conflicts](workflow-port-conflicts.md) — Removing a manual workflow can orphan the process; kill the port holder before restarting managed artifacts.
 - [Session Log](session-log.md) — Running log of what was built each session; what's next.
+- [Product Direction](product-direction.md) — Shared Replit-auth studio, admin permissions, CSV bulk import, manual-first content workflow.

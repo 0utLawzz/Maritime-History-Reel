@@ -52,7 +52,11 @@ A ~27-second animated history reel covering the Mary Rose warship (1545), with s
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+- Use Replit login for authentication.
+- Use one shared studio with administrator-controlled permissions.
+- Start bulk import with CSV support.
+- Prefer manual content entry and bulk import over automatic AI script generation.
+- Build and deliver changes in small, reviewable batches and push completed batches to GitHub.
 
 ## Gotchas
 
