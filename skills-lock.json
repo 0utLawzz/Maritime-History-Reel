@@ -25,6 +25,12 @@
       "skillPath": "tools/video/ai-video-generation/SKILL.md",
       "computedHash": "89778323d1e01c08cb00a94164b343265d378d3f86dc01457db87095c912b489"
     },
+    "audit-website": {
+      "source": "squirrelscan/skills",
+      "sourceType": "github",
+      "skillPath": "skills/audit-website/SKILL.md",
+      "computedHash": "1ec7fd69b54e956f12035344ef07e4c9b0d8682e135f69d5d3c35521e2a77e44"
+    },
     "better-auth-best-practices": {
       "source": "better-auth/skills",
       "sourceType": "github",
@@ -79,6 +85,12 @@
       "skillPath": "skills/remotion-best-practices/SKILL.md",
       "computedHash": "c20bea275d2d86a5df405d36ee85e1104964fb7c987101ac18edd8573e316d76"
     },
+    "requesting-code-review": {
+      "source": "obra/superpowers",
+      "sourceType": "github",
+      "skillPath": "skills/requesting-code-review/SKILL.md",
+      "computedHash": "2304d2073c62eab163e04de40fe775e3d87c69c0df40cd4dc953fdb8e3205b81"
+    },
     "seo-audit": {
       "source": "coreyhaines31/marketingskills",
       "sourceType": "github",
@@ -132,6 +144,12 @@
       "sourceType": "github",
       "skillPath": "skills/web-design-guidelines/SKILL.md",
       "computedHash": "f3bc47f890f42a44db1007ab390709ec368e4b8c089baee6b0007182236ac474"
+    },
+    "xlsx": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/xlsx/SKILL.md",
+      "computedHash": "f5945e6e76dc7c178375e5cdf3140959b30cbcd4570ec3dc62296812259fc38d"
     }
   }
 }
