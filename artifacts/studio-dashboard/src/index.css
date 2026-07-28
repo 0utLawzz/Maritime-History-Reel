@@ -391,9 +391,11 @@
     border-radius: 4px;
   }
 
-  .nb-badge-draft     { border-color: rgba(12,12,12,0.40); color: #555; background: rgba(12,12,12,0.05); }
-  .nb-badge-review    { border-color: #C94A00; color: #C94A00; background: rgba(201,74,0,0.08); }
-  .nb-badge-approved  { border-color: #0A6B52; color: #0A6B52; background: rgba(10,107,82,0.08); }
+  .nb-badge-content   { border-color: rgba(12,12,12,0.40); color: #555; background: rgba(12,12,12,0.05); }
+  .nb-badge-scripted  { border-color: #C94A00; color: #C94A00; background: rgba(201,74,0,0.08); }
+  .nb-badge-building  { border-color: #D4A800; color: #8A6D00; background: rgba(212,168,0,0.12); }
+  .nb-badge-ready     { border-color: #0A6B52; color: #0A6B52; background: rgba(10,107,82,0.08); }
+  .nb-badge-failed    { border-color: #FF3333; color: #CC0000; background: rgba(255,51,51,0.08); }
   .nb-badge-scheduled { border-color: #D4A800; color: #8a6800; background: rgba(212,168,0,0.10); }
   .nb-badge-published { border-color: #8B2FC9; color: #8B2FC9; background: rgba(139,47,201,0.08); }
 

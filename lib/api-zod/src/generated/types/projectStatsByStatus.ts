@@ -7,9 +7,11 @@
  */
 
 export type ProjectStatsByStatus = {
-  draft: number;
-  review: number;
-  approved: number;
+  content: number;
+  scripted: number;
+  building: number;
+  ready: number;
   scheduled: number;
   published: number;
+  failed: number;
 };

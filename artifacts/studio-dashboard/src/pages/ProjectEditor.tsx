@@ -64,7 +64,7 @@ export default function ProjectEditor() {
     scene5Headline: '',
     scene5Body: '',
     scene6Cta: '',
-    status: VideoProjectStatus.draft
+     status: VideoProjectStatus.content
   });
 
   const [activeTab, setActiveTab] = useState(1);
@@ -97,7 +97,7 @@ export default function ProjectEditor() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSave = async (markForReview = false) => {
+  const handleSave = async (markAsScripted = false) => {
     if (!formData.title) {
       toast.error('Project Title is required');
       return;
@@ -105,7 +105,7 @@ export default function ProjectEditor() {
 
     const payload = {
       ...formData,
-      status: markForReview ? VideoProjectStatus.review : formData.status
+      status: markAsScripted ? VideoProjectStatus.scripted : formData.status
     };
 
     try {
@@ -115,8 +115,8 @@ export default function ProjectEditor() {
         queryClient.invalidateQueries({ queryKey: getGetProjectQueryKey(id as number) });
         queryClient.invalidateQueries({ queryKey: getListProjectsQueryKey() });
         queryClient.invalidateQueries({ queryKey: getGetProjectStatsQueryKey() });
-        if (markForReview) {
-          setFormData(prev => ({ ...prev, status: VideoProjectStatus.review }));
+        if (markAsScripted) {
+          setFormData(prev => ({ ...prev, status: VideoProjectStatus.scripted }));
         }
       } else {
         const res = await createProject.mutateAsync({ data: payload as any });
@@ -171,11 +171,13 @@ export default function ProjectEditor() {
   ];
 
   const statuses = [
-    VideoProjectStatus.draft,
-    VideoProjectStatus.review,
-    VideoProjectStatus.approved,
+    VideoProjectStatus.content,
+    VideoProjectStatus.scripted,
+    VideoProjectStatus.building,
+    VideoProjectStatus.ready,
     VideoProjectStatus.scheduled,
-    VideoProjectStatus.published
+    VideoProjectStatus.published,
+    VideoProjectStatus.failed,
   ];
 
   if (isEdit && projectLoading) {
@@ -359,7 +361,7 @@ export default function ProjectEditor() {
               disabled={createProject.isPending || updateProject.isPending}
               className="nb-btn nb-btn-teal flex-1 min-w-[120px]"
             >
-              MARK FOR REVIEW
+               MARK AS SCRIPTED
             </button>
           )}
 

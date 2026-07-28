@@ -10,9 +10,11 @@ export type VideoProjectStatusUpdateStatus = typeof VideoProjectStatusUpdateStat
 
 
 export const VideoProjectStatusUpdateStatus = {
-  draft: 'draft',
-  review: 'review',
-  approved: 'approved',
+  content: 'content',
+  scripted: 'scripted',
+  building: 'building',
+  ready: 'ready',
   scheduled: 'scheduled',
   published: 'published',
+  failed: 'failed',
 } as const;

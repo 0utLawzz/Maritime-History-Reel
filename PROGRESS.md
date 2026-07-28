@@ -20,6 +20,7 @@ This file tracks the agreed direction and implementation milestones for the hist
 - Permissions: administrator-controlled roles
 - Initial bulk workflow: CSV upload
 - Script workflow: manual entry or bulk import; no automatic AI script generation in the initial scope
+- Production pipeline: Content → Scripted → Building → Ready → Scheduled → Published, with Failed for recovery
 - Delivery style: small, reviewable batches pushed to GitHub
 
 ## Roadmap

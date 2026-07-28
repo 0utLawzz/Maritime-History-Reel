@@ -3,11 +3,13 @@ import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod/v4";
 
 export const VIDEO_STATUSES = [
-  "draft",
-  "review",
-  "approved",
+  "content",
+  "scripted",
+  "building",
+  "ready",
   "scheduled",
   "published",
+  "failed",
 ] as const;
 
 export type VideoStatus = (typeof VIDEO_STATUSES)[number];
@@ -43,7 +45,7 @@ export const videoProjectsTable = pgTable("video_projects", {
   scene6Cta: text("scene6_cta").notNull().default(""),
 
   // Pipeline
-  status: text("status").notNull().default("draft"),
+  status: text("status").notNull().default("content"),
   scheduledAt: timestamp("scheduled_at"),
   publishedAt: timestamp("published_at"),
 

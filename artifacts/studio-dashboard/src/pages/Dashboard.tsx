@@ -35,11 +35,13 @@ export default function Dashboard() {
 
   const getStatusColor = (status: string) => {
     switch(status) {
-      case 'draft': return 'border-gray-500';
-      case 'review': return 'border-[#C94A00]';
-      case 'approved': return 'border-[#0A6B52]';
+      case 'content': return 'border-gray-500';
+      case 'scripted': return 'border-[#C94A00]';
+      case 'building': return 'border-[#D4A800]';
+      case 'ready': return 'border-[#0A6B52]';
       case 'scheduled': return 'border-[#D4A800]';
       case 'published': return 'border-[#8B2FC9]';
+      case 'failed': return 'border-[#FF3333]';
       default: return 'border-gray-500';
     }
   };
@@ -59,9 +61,9 @@ export default function Dashboard() {
       </nav>
 
       <main className="max-w-7xl mx-auto px-6 py-10">
-        {/* Stats row */}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-6 mb-12">
-          {['draft', 'review', 'approved', 'scheduled', 'published'].map((status) => {
+        {/* Production status board */}
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-12">
+          {['content', 'scripted', 'building', 'ready', 'scheduled', 'published', 'failed'].map((status) => {
             const count = stats?.byStatus?.[status as keyof typeof stats.byStatus] || 0;
             return (
               <div key={status} className={`nb-card p-5 border-t-[6px] ${getStatusColor(status)} flex flex-col justify-between`}>
@@ -72,7 +74,7 @@ export default function Dashboard() {
           })}
         </div>
 
-        {/* Project grid/table */}
+        {/* Content list */}
         {projectsLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[1, 2, 3].map(i => (

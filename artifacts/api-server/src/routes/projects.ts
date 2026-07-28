@@ -40,11 +40,13 @@ router.get("/projects/stats", async (_req, res) => {
     const all = await db.select().from(videoProjectsTable);
 
     const byStatus = {
-      draft: 0,
-      review: 0,
-      approved: 0,
+      content: 0,
+      scripted: 0,
+      building: 0,
+      ready: 0,
       scheduled: 0,
       published: 0,
+      failed: 0,
     };
     for (const p of all) {
       const s = p.status as keyof typeof byStatus;
@@ -88,7 +90,7 @@ router.post("/projects", async (req, res) => {
         scene5Headline: parsed.data.scene5Headline ?? "",
         scene5Body: parsed.data.scene5Body ?? "",
         scene6Cta: parsed.data.scene6Cta ?? "",
-        status: parsed.data.status ?? "draft",
+        status: parsed.data.status ?? "content",
         scheduledAt: parsed.data.scheduledAt
           ? new Date(parsed.data.scheduledAt)
           : null,

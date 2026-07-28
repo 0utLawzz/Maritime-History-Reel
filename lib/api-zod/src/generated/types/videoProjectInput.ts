@@ -5,7 +5,6 @@
  * Video Studio Dashboard API — manage video projects, track status, and publish to social platforms.
  * OpenAPI spec version: 0.2.0
  */
-import type { VideoProjectInputStatus } from './videoProjectInputStatus';
 
 export interface VideoProjectInput {
   /** @minLength 1 */
@@ -22,7 +21,8 @@ export interface VideoProjectInput {
   scene5Headline?: string;
   scene5Body?: string;
   scene6Cta?: string;
-  status?: VideoProjectInputStatus;
+  status?: string;
+  enum?: unknown;
   /** @nullable */
   scheduledAt?: Date | null;
 }

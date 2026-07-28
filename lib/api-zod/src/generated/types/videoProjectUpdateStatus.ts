@@ -10,9 +10,11 @@ export type VideoProjectUpdateStatus = typeof VideoProjectUpdateStatus[keyof typ
 
 
 export const VideoProjectUpdateStatus = {
-  draft: 'draft',
-  review: 'review',
-  approved: 'approved',
+  content: 'content',
+  scripted: 'scripted',
+  building: 'building',
+  ready: 'ready',
   scheduled: 'scheduled',
   published: 'published',
+  failed: 'failed',
 } as const;

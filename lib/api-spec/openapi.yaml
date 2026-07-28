@@ -38,7 +38,7 @@ paths:
           required: false
           schema:
             type: string
-            enum: [draft, review, approved, scheduled, published]
+            enum: [content, scripted, building, ready, scheduled, published, failed]
           description: Filter by status
       responses:
         "200":
@@ -257,7 +257,7 @@ components:
           description: Call-to-action text for final scene (e.g. "Follow for more history")
         status:
           type: string
-          enum: [draft, review, approved, scheduled, published]
+          enum: [content, scripted, building, ready, scheduled, published, failed]
         scheduledAt:
           type: ["string", "null"]
           format: date-time
@@ -308,7 +308,7 @@ components:
           type: string
         status:
           type: string
-          enum: [draft, review, approved, scheduled, published]
+        enum: [content, scripted, building, ready, scheduled, published, failed]
         scheduledAt:
           type: ["string", "null"]
           format: date-time
@@ -345,7 +345,7 @@ components:
           type: string
         status:
           type: string
-          enum: [draft, review, approved, scheduled, published]
+          enum: [content, scripted, building, ready, scheduled, published, failed]
         scheduledAt:
           type: ["string", "null"]
           format: date-time
@@ -357,7 +357,7 @@ components:
       properties:
         status:
           type: string
-          enum: [draft, review, approved, scheduled, published]
+          enum: [content, scripted, building, ready, scheduled, published, failed]
         scheduledAt:
           type: ["string", "null"]
           format: date-time
@@ -374,17 +374,21 @@ components:
         byStatus:
           type: object
           properties:
-            draft:
+            content:
               type: integer
-            review:
+            scripted:
               type: integer
-            approved:
+            building:
+              type: integer
+            ready:
               type: integer
             scheduled:
               type: integer
             published:
               type: integer
-          required: [draft, review, approved, scheduled, published]
+            failed:
+              type: integer
+          required: [content, scripted, building, ready, scheduled, published, failed]
         recentlyUpdated:
           type: array
           items:

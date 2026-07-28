@@ -14,7 +14,6 @@ export * from './projectStats';
 export * from './projectStatsByStatus';
 export * from './videoProject';
 export * from './videoProjectInput';
-export * from './videoProjectInputStatus';
 export * from './videoProjectStatus';
 export * from './videoProjectStatusUpdate';
 export * from './videoProjectStatusUpdateStatus';

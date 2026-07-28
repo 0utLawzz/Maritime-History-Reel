@@ -21,7 +21,7 @@ export const HealthCheckResponse = zod.object({
  * @summary List all video projects
  */
 export const ListProjectsQueryParams = zod.object({
-  "status": zod.enum(['draft', 'review', 'approved', 'scheduled', 'published']).optional().describe('Filter by status')
+  "status": zod.enum(['content', 'scripted', 'building', 'ready', 'scheduled', 'published', 'failed']).optional().describe('Filter by status')
 })
 
 export const ListProjectsResponseItem = zod.object({
@@ -39,7 +39,7 @@ export const ListProjectsResponseItem = zod.object({
   "scene5Headline": zod.string(),
   "scene5Body": zod.string(),
   "scene6Cta": zod.string().describe('Call-to-action text for final scene (e.g. \"Follow for more history\")'),
-  "status": zod.enum(['draft', 'review', 'approved', 'scheduled', 'published']),
+  "status": zod.enum(['content', 'scripted', 'building', 'ready', 'scheduled', 'published', 'failed']),
   "scheduledAt": zod.coerce.date().nullish(),
   "publishedAt": zod.coerce.date().nullish(),
   "version": zod.number().describe('Auto-incremented version number on every save'),
@@ -69,7 +69,8 @@ export const CreateProjectBody = zod.object({
   "scene5Headline": zod.string().optional(),
   "scene5Body": zod.string().optional(),
   "scene6Cta": zod.string().optional(),
-  "status": zod.enum(['draft', 'review', 'approved', 'scheduled', 'published']).optional(),
+  "status": zod.string().optional(),
+  "enum": zod.unknown().optional(),
   "scheduledAt": zod.coerce.date().nullish()
 })
 
@@ -88,7 +89,7 @@ export const CreateProjectResponse = zod.object({
   "scene5Headline": zod.string(),
   "scene5Body": zod.string(),
   "scene6Cta": zod.string().describe('Call-to-action text for final scene (e.g. \"Follow for more history\")'),
-  "status": zod.enum(['draft', 'review', 'approved', 'scheduled', 'published']),
+  "status": zod.enum(['content', 'scripted', 'building', 'ready', 'scheduled', 'published', 'failed']),
   "scheduledAt": zod.coerce.date().nullish(),
   "publishedAt": zod.coerce.date().nullish(),
   "version": zod.number().describe('Auto-incremented version number on every save'),
@@ -104,11 +105,13 @@ export const CreateProjectResponse = zod.object({
 export const GetProjectStatsResponse = zod.object({
   "total": zod.number(),
   "byStatus": zod.object({
-  "draft": zod.number(),
-  "review": zod.number(),
-  "approved": zod.number(),
+  "content": zod.number(),
+  "scripted": zod.number(),
+  "building": zod.number(),
+  "ready": zod.number(),
   "scheduled": zod.number(),
-  "published": zod.number()
+  "published": zod.number(),
+  "failed": zod.number()
 }),
   "recentlyUpdated": zod.array(zod.object({
   "id": zod.number(),
@@ -125,7 +128,7 @@ export const GetProjectStatsResponse = zod.object({
   "scene5Headline": zod.string(),
   "scene5Body": zod.string(),
   "scene6Cta": zod.string().describe('Call-to-action text for final scene (e.g. \"Follow for more history\")'),
-  "status": zod.enum(['draft', 'review', 'approved', 'scheduled', 'published']),
+  "status": zod.enum(['content', 'scripted', 'building', 'ready', 'scheduled', 'published', 'failed']),
   "scheduledAt": zod.coerce.date().nullish(),
   "publishedAt": zod.coerce.date().nullish(),
   "version": zod.number().describe('Auto-incremented version number on every save'),
@@ -157,7 +160,7 @@ export const GetProjectResponse = zod.object({
   "scene5Headline": zod.string(),
   "scene5Body": zod.string(),
   "scene6Cta": zod.string().describe('Call-to-action text for final scene (e.g. \"Follow for more history\")'),
-  "status": zod.enum(['draft', 'review', 'approved', 'scheduled', 'published']),
+  "status": zod.enum(['content', 'scripted', 'building', 'ready', 'scheduled', 'published', 'failed']),
   "scheduledAt": zod.coerce.date().nullish(),
   "publishedAt": zod.coerce.date().nullish(),
   "version": zod.number().describe('Auto-incremented version number on every save'),
@@ -190,7 +193,7 @@ export const UpdateProjectBody = zod.object({
   "scene5Headline": zod.string().optional(),
   "scene5Body": zod.string().optional(),
   "scene6Cta": zod.string().optional(),
-  "status": zod.enum(['draft', 'review', 'approved', 'scheduled', 'published']).optional(),
+  "status": zod.enum(['content', 'scripted', 'building', 'ready', 'scheduled', 'published', 'failed']).optional(),
   "scheduledAt": zod.coerce.date().nullish()
 })
 
@@ -209,7 +212,7 @@ export const UpdateProjectResponse = zod.object({
   "scene5Headline": zod.string(),
   "scene5Body": zod.string(),
   "scene6Cta": zod.string().describe('Call-to-action text for final scene (e.g. \"Follow for more history\")'),
-  "status": zod.enum(['draft', 'review', 'approved', 'scheduled', 'published']),
+  "status": zod.enum(['content', 'scripted', 'building', 'ready', 'scheduled', 'published', 'failed']),
   "scheduledAt": zod.coerce.date().nullish(),
   "publishedAt": zod.coerce.date().nullish(),
   "version": zod.number().describe('Auto-incremented version number on every save'),
@@ -236,7 +239,7 @@ export const UpdateProjectStatusParams = zod.object({
 })
 
 export const UpdateProjectStatusBody = zod.object({
-  "status": zod.enum(['draft', 'review', 'approved', 'scheduled', 'published']),
+  "status": zod.enum(['content', 'scripted', 'building', 'ready', 'scheduled', 'published', 'failed']),
   "scheduledAt": zod.coerce.date().nullish()
 })
 
@@ -255,7 +258,7 @@ export const UpdateProjectStatusResponse = zod.object({
   "scene5Headline": zod.string(),
   "scene5Body": zod.string(),
   "scene6Cta": zod.string().describe('Call-to-action text for final scene (e.g. \"Follow for more history\")'),
-  "status": zod.enum(['draft', 'review', 'approved', 'scheduled', 'published']),
+  "status": zod.enum(['content', 'scripted', 'building', 'ready', 'scheduled', 'published', 'failed']),
   "scheduledAt": zod.coerce.date().nullish(),
   "publishedAt": zod.coerce.date().nullish(),
   "version": zod.number().describe('Auto-incremented version number on every save'),

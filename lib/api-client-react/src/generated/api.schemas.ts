@@ -13,11 +13,13 @@ export type VideoProjectStatus = typeof VideoProjectStatus[keyof typeof VideoPro
 
 
 export const VideoProjectStatus = {
-  draft: 'draft',
-  review: 'review',
-  approved: 'approved',
+  content: 'content',
+  scripted: 'scripted',
+  building: 'building',
+  ready: 'ready',
   scheduled: 'scheduled',
   published: 'published',
+  failed: 'failed',
 } as const;
 
 export interface VideoProject {
@@ -50,17 +52,6 @@ export interface VideoProject {
   updatedAt: string;
 }
 
-export type VideoProjectInputStatus = typeof VideoProjectInputStatus[keyof typeof VideoProjectInputStatus];
-
-
-export const VideoProjectInputStatus = {
-  draft: 'draft',
-  review: 'review',
-  approved: 'approved',
-  scheduled: 'scheduled',
-  published: 'published',
-} as const;
-
 export interface VideoProjectInput {
   /** @minLength 1 */
   title: string;
@@ -76,7 +67,8 @@ export interface VideoProjectInput {
   scene5Headline?: string;
   scene5Body?: string;
   scene6Cta?: string;
-  status?: VideoProjectInputStatus;
+  status?: string;
+  enum?: unknown;
   /** @nullable */
   scheduledAt?: string | null;
 }
@@ -85,11 +77,13 @@ export type VideoProjectUpdateStatus = typeof VideoProjectUpdateStatus[keyof typ
 
 
 export const VideoProjectUpdateStatus = {
-  draft: 'draft',
-  review: 'review',
-  approved: 'approved',
+  content: 'content',
+  scripted: 'scripted',
+  building: 'building',
+  ready: 'ready',
   scheduled: 'scheduled',
   published: 'published',
+  failed: 'failed',
 } as const;
 
 export interface VideoProjectUpdate {
@@ -116,11 +110,13 @@ export type VideoProjectStatusUpdateStatus = typeof VideoProjectStatusUpdateStat
 
 
 export const VideoProjectStatusUpdateStatus = {
-  draft: 'draft',
-  review: 'review',
-  approved: 'approved',
+  content: 'content',
+  scripted: 'scripted',
+  building: 'building',
+  ready: 'ready',
   scheduled: 'scheduled',
   published: 'published',
+  failed: 'failed',
 } as const;
 
 export interface VideoProjectStatusUpdate {
@@ -130,11 +126,13 @@ export interface VideoProjectStatusUpdate {
 }
 
 export type ProjectStatsByStatus = {
-  draft: number;
-  review: number;
-  approved: number;
+  content: number;
+  scripted: number;
+  building: number;
+  ready: number;
   scheduled: number;
   published: number;
+  failed: number;
 };
 
 export interface ProjectStats {
@@ -158,10 +156,12 @@ export type ListProjectsStatus = typeof ListProjectsStatus[keyof typeof ListProj
 
 
 export const ListProjectsStatus = {
-  draft: 'draft',
-  review: 'review',
-  approved: 'approved',
+  content: 'content',
+  scripted: 'scripted',
+  building: 'building',
+  ready: 'ready',
   scheduled: 'scheduled',
   published: 'published',
+  failed: 'failed',
 } as const;
 
